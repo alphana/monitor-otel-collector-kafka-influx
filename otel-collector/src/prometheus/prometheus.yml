@@ -1,0 +1,42 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: [ 'localhost:9090' ]
+  - job_name: 'edge_service'
+    scrape_interval: 2s
+    metrics_path: '/actuator/prometheus'
+    #    bearer_token: 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJSZTV5OEhFdlZ3QWUxR1BJVTBpb3AtTDRrczZ3aGxldFdtQmpKOGtXZ2owIn0.eyJleHAiOjE2OTkwNDcwMzEsImlhdCI6MTY5OTAxMTAzMSwianRpIjoiZjdlYWIyOTctNGQwZC00NTVjLTlkYjAtYzYyZmZhMTUyZTA1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2JlYW5zIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhmNmVkZWY3LTM5YTAtNGMxMi1hYTgxLTIxNGY2NGUxMjk4OCIsInR5cCI6IkJlYXJlciIsImF6cCI6InVpLWVkZ2Utc2VydmljZS1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYWFkNWFlYTAtNDJmMy00ZmZjLTljMTMtMDQ5OTc2Mzk3OTI2IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1iZWFucyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJhYWQ1YWVhMC00MmYzLTRmZmMtOWMxMy0wNDk5NzYzOTc5MjYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InJlYWRlci11c2VyIiwiZ2l2ZW5fbmFtZSI6IiIsImZhbWlseV9uYW1lIjoiIn0.QI59OORloEOnZw7Zfnbpyuzn19S1U27Coy_wl7RCeeUcd_l0OLdnJqQVJCML7_r0VfXnoGMiv0pGlEMXGmTT0nvDjhmqOHZXRenfqFrTd9_z6jwJ5oLw06cPcGoW2pKSBFl1LMiC64FW3Mt0gRFP8u5KjrywYoN1HKxGoAo2G7LyGqwWU8j5XQz1ATpPm5eqqONZZbYRLDV6gBbibmIKnsLCN4soCL0dhJ-fmPTQx_5s4V0zX4KCNF-ttMmYB2AjIvH_atIUcj8HY1pwCyYLZfKUNSiTV9NO0r4Y9_mPKR5hKsIAdd1btIOGoeu3TSaxrCzNNH16iK-IO0A6RTdyig'
+    static_configs:
+      - targets: ['host.docker.internal:8083' ]
+#  - job_name: 'edge'
+#    scrape_interval: 2s
+#    metrics_path: '/actuator/prometheus'
+#    static_configs:
+#      - targets: ['edge:8083' ]
+  #  - job_name: 'iamhost'
+  #    scrape_interval: 2s
+  #    metrics_path: '/auth/metrics/prometheus'
+  #    static_configs:
+  #      - targets: [ 'host.containers.internal:8080', 'host.docker.internal:8080' ]
+  #        labels:
+  #          group: 'localhost'
+  - job_name: 'identity-provider-base'
+    scrape_interval: 2s
+    metrics_path: '/auth/metrics/prometheus'
+    static_configs:
+      - targets: [ 'identity-provider-base:8080' ]
+        labels:
+          group: 'dock'
+
+  - job_name: 'docker'
+    #    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:9323"]
+
+  - job_name: 'tempo'
+    static_configs:
+      - targets: [ 'tempo:3200' ]
